@@ -1,14 +1,13 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('./index');
 module.exports = (sequelize, DataTypes) => {
-    const Evaluation = sequelize.define('Evaluation', {
-        ISPRESENT: { type: DataTypes.JSON },
+    const EvaluationSou = sequelize.define('EvaluationSou', {
         NOTE: { type: DataTypes.DECIMAL(4, 2), allowNull: false },
         REMARQUE: { type: DataTypes.TEXT, allowNull: false },
     },
     {
-        tableName:"Evaluation",
-        modelName:"Evaluation"
+        tableName:"EvaluationSou",
+        modelName:"EvaluationS"
     });
-    return Evaluation;
+    return EvaluationSou;
 };

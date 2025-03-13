@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     const Groupe = sequelize.define('Group', {
         ANNE: { type: DataTypes.ENUM('2', '3', '4', '5'), allowNull: false },
         NUMERO: { type: DataTypes.INTEGER,  unique: true },
-        NEEDS: { type: DataTypes.TEXT },
     },
 {
     tableName:"Groupe",

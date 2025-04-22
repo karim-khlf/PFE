@@ -1,4 +1,3 @@
-
 import express from "express";
 import { connect, syncDB } from "./index.js";
 import cookieParser from "cookie-parser";

@@ -2,13 +2,13 @@ import express from "express";
 import {
   createJoinDemande,
   updateJoinDemande,
-  getAllJoinDemandes,
+  getAllJoinDemande,
   deleteJoinDemande,
 } from "../controllers/joinDemandes.controller.js";
 const route = express.Router();
 
 route.post("/", createJoinDemande);
-route.get("/", getAllJoinDemandes);
+route.get("/", getAllJoinDemande);
 route.patch("/:id", updateJoinDemande);
 route.delete("/:id", deleteJoinDemande);
 

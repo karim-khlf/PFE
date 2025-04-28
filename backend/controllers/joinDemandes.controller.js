@@ -4,7 +4,7 @@ import {
   updateJoinDemandeService,
   getAllJoinDemandesService,
   deleteJoinDemandeService,
-} from "../services/joinDemandesServices";
+} from "../services/joinDemandesServices.js";
 
 export const createJoinDemande = async (req, res) => {
   try {

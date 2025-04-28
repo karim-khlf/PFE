@@ -1,5 +1,5 @@
 import { Etudiant, Groupe, JoinDemande } from "../models/index.js";
-import getConfig from "../utils/getConfig.js";
+import {getConfig} from "../utils/getConfig.js";
 import SysConfig from "../models/systemConfig.js";
 
 export const createJoinDemandeService = async (req, t) => {

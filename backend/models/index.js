@@ -1,5 +1,5 @@
 // import all models
-import Classe from "./classe.js";
+import Classe from "./class.js";
 import Competence from "./competence.js";
 import Document from "./document.js";
 import Enseignant from "./enseignant.js";

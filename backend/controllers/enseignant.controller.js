@@ -33,11 +33,12 @@ export const createEnseignant = async (req, res) => {
     const etudiant = await createEnseignantService(req);
     res
       .status(200)
-      .json({ etudiant, message: "etudiant created successfully" });
+      .json({ etudiant, message: "enseignant created successfully" });
   } catch (error) {
+    console.log(error)
     res
       .status(500)
-      .json({ message: "Erreur lors de la création de l'étudiant", error });
+      .json({ message: "Erreur lors de la création de l'enseignant", error });
   }
 };
 

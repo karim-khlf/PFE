@@ -31,7 +31,6 @@ export const deleteDocumentService = async (req)=>{
           console.log('PDF deleted successfully:', result);
         }
       });
-
       const deletedDocuments = await Document.destroy({
       where:{id:req.params.id}})
     if (deletedDocuments===0) {

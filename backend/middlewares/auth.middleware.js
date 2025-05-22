@@ -15,14 +15,16 @@ const authenticate = (req, res, next) => {
 
 const login = async (req, res) => {
   try {
-    await loginService(req);
+    const { token, user } = await loginService(req);
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 1000, 
     });
-    res.json({ message: "Logged in", user: { id: user.id, role: user.role } });
+
+    res.json({ message: "Logged in", user: { id: user.id, role: user.role },token:token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

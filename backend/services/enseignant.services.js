@@ -1,4 +1,4 @@
-import { User, Specialite, Enseignant } from "../models/index.js";
+  import { User, Specialite, Enseignant } from "../models/index.js";
 import sequelize from "../index.js";
 import bcrypt from "bcryptjs";
 
@@ -16,7 +16,19 @@ export const getAllEnseignantsService = async (req) => {
 };
 
 export const getEnseignantService = async (req) => {
-  const enseignant = await Enseignant.findByPk(req.params.id);
+  const enseignant = await Enseignant.findByPk(req.params.id, {
+  include: [
+    {
+      model: User,
+      attributes: ['name', 'email']
+    },
+    {
+      model: Specialite,
+      attributes: ['nom']
+    }
+  ]
+});
+
   if (!enseignant) {
     throw new Error("enseignant not found");
   }
@@ -36,7 +48,7 @@ export const createEnseignantService = async (req) => {
   let specialite;
   if (specialiteName) {
     specialite = await Specialite.findOne({
-      where: { name: specialite },
+      where: { nom: specialiteName },
     });
     if (!specialite) {
       throw new Error("No specialite found ");

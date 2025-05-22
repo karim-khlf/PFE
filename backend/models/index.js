@@ -23,7 +23,12 @@ import Theme from "./theme.js";
 import ThemePrerequisite from "./ThemePrerequisite.js";
 import ThemeTag from "./ThemeTag.js";
 import User from "./user.js";
-// fin de import models
+User.hasOne(Enseignant, { foreignKey: 'id' });
+User.hasOne(Etudiant, { foreignKey: 'id' });
+Enseignant.belongsTo(User, { foreignKey: 'id' });
+Etudiant.belongsTo(User, { foreignKey: 'id' });
+Enseignant.hasOne(Specialite, {foreignKey:'id'});
+Specialite.belongsTo(Enseignant,{foreignKey:'id'});
 
 export {
   Classe,

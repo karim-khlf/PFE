@@ -6,7 +6,16 @@ export const getAllEnseignantsService = async (req) => {
   const specialite = req.query.specialite || null;
   const enseignants = await Enseignant.findAll({
     where: specialite ? { specialite } : {}, // Avoid filtering with null
-  });
+    include: [
+    {
+      model: User,
+      attributes: ['name', 'email']
+    },
+    {
+      model: Specialite,
+      attributes: ['nom']
+    }
+  ]});
 
   if (enseignants.length === 0) {
     throw new Error("Aucun enseignant trouvé");
@@ -75,28 +84,32 @@ export const createEnseignantService = async (req) => {
   return enseignant;
 };
 
-export const deleteEnseignantService = async (req) => {
-  const { id } = req.params;
-  const t = await sequelize.transaction();
-  const enseignant = await Enseignant.findByPk(id, {
-    attributes: ["id"],
-    transaction: t,
-  });
+  export const deleteEnseignantService = async (req) => {
+    const { id } = req.params;
+    const t = await sequelize.transaction();
+    try {
+    const enseignant = await Enseignant.findByPk(id, {
+      attributes: ["id"],
+      transaction: t,
+    });
 
-  if (!enseignant) {
+    if (!enseignant) {
+      throw new Error("Enseignant not found to delete");
+    }
+
+    if (enseignant.isAdmin) {
+      throw new Error("Cannot delete an admin user");
+    }
+
+    await User.destroy({ where: { id }, transaction: t });
+    await Enseignant.destroy({where:{id}, transaction: t})
+
+    await t.commit();
+    return true;
+  } catch(error) {
     await t.rollback();
-    throw new Error("Enseignant not found to delete");
+    throw error
   }
-
-  if (enseignant.isAdmin) {
-    await t.rollback();
-    throw new Error("Cannot delete an admin user");
-  }
-
-  await User.destroy({ where: { id }, transaction: t });
-
-  await t.commit();
-  return true;
 };
 
 export const updateEnseignantService = async (req) => {

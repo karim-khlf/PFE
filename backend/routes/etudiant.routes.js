@@ -9,10 +9,13 @@ import {
 import { authenticate } from "../middlewares/auth.middleware.js";
 
 const route = express.Router();
-route.get("/", authenticate, getEtudiants);
-route.post("/", authenticate, createEtudiant);
+route.get("/", authenticate
+, getEtudiants);
+route.post("/", authenticate
+, createEtudiant);
 
-route.get("/:id", authenticate, getEtudiant);
+route.get("/:id", authenticate
+  , getEtudiant);
 route.delete("/:id", deleteEtudiant);
 route.put("/:id", updateEtudiant);
 

@@ -5,6 +5,8 @@ import {
   Competence,
   Specialite,
   Theme,
+  Enseignant,
+  Entreprise,
   EtudiantCompetence,
 } from "../models/index.js";
 
@@ -43,7 +45,7 @@ export const getAllEtudiantsService = async (req) => {
   // };
 
   let whereEtudiant = {};
-  let whereUser = {};
+  let whereUser = {}; 
   let whereSpecialite = {};
   let whereCompetence = {};
   let whereEnseignant = {};
@@ -148,14 +150,16 @@ export const getAllEtudiantsService = async (req) => {
         model: Groupe,
         where: whereGroupe,
         attributes: [],
+        required:false,
         include: [
           {
             model: Theme,
             attributes: [],
             include: [
-              { model: Enseignant, attributes: [], where: whereEnseignant },
-              { model: Entreprise, attributes: [], where: whereEntreprise },
+              { model: Enseignant, attributes: [], where: whereEnseignant,required:false },
+              { model: Entreprise, attributes: [], where: whereEntreprise,required:false },
             ],
+            required:false
           },
         ],
       },
@@ -163,10 +167,12 @@ export const getAllEtudiantsService = async (req) => {
         model: Specialite,
         where: whereSpecialite,
         attributes: [],
+        required:false,
       },
       {
         model: Competence,
         through: { where: whereCompetence, attributes: [] },
+        required: false,
       },
     ],
   });
@@ -222,7 +228,7 @@ export const getEtudiantService = async (req) => {
               where: { id },
               attributes: [],
             },
-          ],
+          ],  
           attributes: ["id", "idEncadrant"],
         });
 
@@ -289,7 +295,7 @@ export const createEtudiantService = async (req) => {
   let specialite;
   if (specialiteName) {
     specialite = await Specialite.findOne({
-      where: { name: specialite },
+      where: { nom: specialiteName },
     });
     if (!specialite) {
       throw new Error("No specialite found");

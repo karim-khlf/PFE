@@ -204,7 +204,8 @@ export const getEtudiants = async (req, res) => {
   try {
     const etudiants = await getAllEtudiantsService(req);
     return res.status(200).json(etudiants);
-  } catch (error) {
+  } catch (error) 
+  {console.log(error)
     res.status(400).json({ message: error.message });
   }
 };
@@ -214,6 +215,7 @@ export const createEtudiant = async (req, res) => {
     const etudiant = await createEtudiantService(req);
     res.status(200).json(etudiant);
   } catch (error) {
+    console.log(error)
     res
       .status(500)
       .json({ message: "Erreur lors de la création de l'étudiant", error });

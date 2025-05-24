@@ -27,8 +27,29 @@ User.hasOne(Enseignant, { foreignKey: 'id' });
 User.hasOne(Etudiant, { foreignKey: 'id' });
 Enseignant.belongsTo(User, { foreignKey: 'id' });
 Etudiant.belongsTo(User, { foreignKey: 'id' });
-Enseignant.hasOne(Specialite, {foreignKey:'id'});
-Specialite.belongsTo(Enseignant,{foreignKey:'id'});
+Specialite.hasMany(Enseignant,{foreignKey:'idSpecialite'});
+
+Enseignant.belongsTo(Specialite, {foreignKey:'idSpecialite'});
+Specialite.hasMany(Etudiant, {foreignKey: 'idSpecialite'}); 
+
+Etudiant.belongsTo(Specialite, { foreignKey: 'idSpecialite'});
+Groupe.hasMany(Etudiant, {foreignKey:'id'});
+Etudiant.belongsTo(Groupe, {foreignKey:'id'});
+Theme.hasMany(Groupe, {foreignKey:'id'});
+Groupe.belongsTo(Theme, {foreignKey:'id'});
+Enseignant.hasMany(Theme, {foreignKey:'id'});
+Theme.belongsTo(Enseignant,{foreignKey:'id'})
+Entreprise.hasMany(Theme, {foreignKey:'id'});
+Theme.belongsTo(Entreprise,{foreignKey:'id'});
+Etudiant.belongsToMany(Competence, {
+  through: "EtudiantCompetence",
+  foreignKey: "etudiantId",
+});
+
+Competence.belongsToMany(Etudiant, {
+  through: "EtudiantCompetence",
+  foreignKey: "competenceId",
+});
 
 export {
   Classe,

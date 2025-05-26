@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../sequelize.js";
 
 const User = sequelize.define(
   "User",
@@ -28,9 +28,8 @@ const User = sequelize.define(
         len: [8, 255],
       },
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    role: {
+      type: DataTypes.ENUM("etudiant", "enseignant", "entreprise", "admin"),
       allowNull: false,
     },
   },

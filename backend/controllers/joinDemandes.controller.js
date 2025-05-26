@@ -4,7 +4,7 @@ import {
   updateJoinDemandeService,
   getAllJoinDemandesService,
   deleteJoinDemandeService,
-} from "../services/joinDemandesServices";
+} from "../services/joinDemandesServices.js";
 
 export const createJoinDemande = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ export const updateJoinDemande = async (req, res) => {
   }
 };
 
-export const getAllJoinDemande = async (req, res) => {
+export const getAllJoinDemandes = async (req, res) => {
   try {
     const joinDemandes = await getAllJoinDemandesService(req);
     return res.status(200).json(joinDemandes);

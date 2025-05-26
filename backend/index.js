@@ -1,14 +1,5 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
-dotenv.config();
-let env = process.env;
-
-const sequelize = new Sequelize(env.DB_NAME, env.DB_USER, env.DB_PASS, {
-  host: env.DB_HOST,
-  dialect: env.DB_DIALECT,
-  freezeTableName: true,
-  logging: false, // hdy baah mchi ay query ndirha yesrali logging
-});
+import sequelize from "./sequelize.js";
+import "./models/associations.js";
 // foction de connexion
 const connect = async () => {
   try {
@@ -22,7 +13,7 @@ const connect = async () => {
 // foction de synchronization
 const syncDB = async () => {
   try {
-    await sequelize.sync({ alter: true }); // `alter: true` met à jour la structure sans tout supprimer
+    await sequelize.sync();
     console.log("Database synchronized.");
   } catch (error) {
     console.error("Error synchronizing the database:", error);

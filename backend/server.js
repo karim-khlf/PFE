@@ -9,6 +9,8 @@ import enseignantsRoute from "./routes/enseignant.routes.js";
 import entreprisesRoute from "./routes/entreprise.routes.js";
 import themesRoute from "./routes/theme.routes.js";
 import joinDemandesRoute from "./routes/joinDemandes.route.js";
+import classRoute from "./routes/class.route.js";
+import cors from "cors";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -28,12 +30,20 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use("/auth", authRoute);
 app.use("/etudiants", etudiantsRoute);
 app.use("/enseignants", enseignantsRoute);
 app.use("/entreprises", entreprisesRoute);
 app.use("/themes", themesRoute);
 app.use("/joinDemandes", joinDemandesRoute);
+app.use("/class", classRoute);
 app.listen(port, () => {
   console.log("Server is running on port 3000");
 });

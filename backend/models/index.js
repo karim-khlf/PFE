@@ -1,5 +1,5 @@
 // import all models
-import Classe from "./classe.js";
+import Class from "./class.js";
 import Competence from "./competence.js";
 import Document from "./document.js";
 import Enseignant from "./enseignant.js";
@@ -18,6 +18,7 @@ import Prerequisite from "./prerequisites.js";
 import Soutenance from "./soutenance.js";
 import SoutenanceEvaluation from "./SoutenanceEvaluation.js";
 import Specialite from "./specialite.js";
+import SysConfig from "./systemConfig.js";
 import Tag from "./tag.js";
 import Theme from "./theme.js";
 import ThemePrerequisite from "./ThemePrerequisite.js";
@@ -26,7 +27,7 @@ import User from "./user.js";
 // fin de import models
 
 export {
-  Classe,
+  Class,
   Competence,
   Document,
   Enseignant,
@@ -45,6 +46,7 @@ export {
   Soutenance,
   SoutenanceEvaluation,
   Specialite,
+  SysConfig,
   Tag,
   Theme,
   ThemePrerequisite,

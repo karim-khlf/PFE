@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../sequelize.js";
 
 const Etudiant = sequelize.define(
   "Etudiant",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true },
-    numeroEtudiant: { type: DataTypes.BIGINT, allowNull: false, unique: true },
+    numeroEtudiant: { type: DataTypes.BIGINT, allowNull: false },
     annee: {
       type: DataTypes.INTEGER,
       allowNull: false,

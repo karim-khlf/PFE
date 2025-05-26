@@ -1,7 +1,7 @@
-import Class from "../models/class";
+import Class from "../models/class.js";
 
 export const createClassService = async (req) => {
-  const newClass = await Class.create(req.body.params);
+  const newClass = await Class.create(req.body);
   if (!newClass) {
     throw new Error(
       "the class does not created, somethig went wrong, please retry"
@@ -11,7 +11,7 @@ export const createClassService = async (req) => {
 };
 export const deleteClassService = async (req) => {
   const numberOfDeletedClasses = await Class.destroy({
-    where: req.body.classId,
+    where: req.params.id,
   });
   if (numberOfDeletedClasses === 0) {
     throw new Error("the class you want to delete does not exist");

@@ -1,5 +1,5 @@
 import {
-  Classe,
+  Class,
   Competence,
   Document,
   Enseignant,
@@ -22,12 +22,12 @@ import {
   ThemePrerequisite,
   ThemeTag,
   User,
-} from "../server.js";
+} from "../models/index.js";
 
 User.hasOne(Etudiant, { foreignKey: "id" });
 Etudiant.belongsTo(User, { foreignKey: "id", onDelete: "CASCADE" });
 
-User.hasOne(Enseignant, { foreignKey: "id" });
+User.hasOne(Enseignant, { foreignKey: "id", onDelete: "CASCADE" });
 Enseignant.belongsTo(User, { foreignKey: "id", onDelete: "CASCADE" });
 
 User.hasOne(Entreprise, { foreignKey: "id" });
@@ -112,8 +112,8 @@ Competence.belongsToMany(Groupe, {
 Soutenance.belongsTo(Groupe, { foreignKey: "idGroupe", onDelete: "CASCADE" });
 Groupe.hasOne(Soutenance, { foreignKey: "idGroupe" });
 
-Soutenance.belongsTo(Classe, { foreignKey: "idGroupe", onDelete: "CASCADE" });
-Classe.hasOne(Soutenance, { foreignKey: "idGroupe" });
+Soutenance.belongsTo(Class, { foreignKey: "idGroupe", onDelete: "CASCADE" });
+Class.hasOne(Soutenance, { foreignKey: "idGroupe" });
 
 Soutenance.belongsTo(Jury, { foreignKey: "idGroupe", onDelete: "CASCADE" });
 Jury.hasOne(Soutenance, { foreignKey: "idGroupe" });
@@ -197,3 +197,6 @@ Notification.belongsTo(Groupe, {
   onDelete: "Set NULL",
 });
 Groupe.hasMany(Notification, { foreignKey: "idGroupe" });
+
+Specialite.hasMany(Etudiant, { foreignKey: "idSpecialite" });
+Etudiant.belongsTo(Specialite, { foreignKey: "idSpecialite" });

@@ -6,14 +6,20 @@ import {
   deleteEnseignant,
   updateEnseignant,
 } from "../controllers/enseignant.controller.js";
-
+import { authenticate } from "../middlewares/auth.middleware.js";
+import authorizeRoles from "../utils/authorizeRoles.js";
 const route = express.Router();
 
-route.get("/", getAllEnseignants);
-route.post("/", createEnseignant);
+route.get("/", authenticate, authorizeRoles("admin"), getAllEnseignants);
+route.post("/", authenticate, authorizeRoles("admin"), createEnseignant);
 
-route.get("/:id", getEnseignant);
-route.delete("/:id", deleteEnseignant);
-route.put("/:id", updateEnseignant);
+route.get(
+  "/:id",
+  authenticate,
+  authorizeRoles("admin", "enseignant", "etudiant"),
+  getEnseignant
+);
+route.delete("/:id", authenticate, authorizeRoles("admin"), deleteEnseignant);
+route.patch("/:id", authenticate, authorizeRoles("admin"), updateEnseignant);
 
 export default route;

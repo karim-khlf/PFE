@@ -16,74 +16,72 @@ export const getAllEnseignantsService = async (req) => {
 };
 
 export const getEnseignantService = async (req) => {
+  const user = await User.findByPk(req.params.id);
+  if (!user) {
+    throw new Error("enseignant not found");
+  }
   const enseignant = await Enseignant.findByPk(req.params.id);
   if (!enseignant) {
     throw new Error("enseignant not found");
   }
-  return enseignant;
+  return { user, enseignant };
 };
 
-export const createEnseignantService = async (req) => {
-  const { name, email, password, specialiteName, nss } = req.body;
+export const createEnseignantService = async (req, t) => {
+  const { name, email, password, specialiteName, nss, role } = req.body;
   if (!name || !email || !password || !nss) {
     throw new Error(
       "Veuillez renseigner tous les champs: name, email, password, nss"
     );
   }
   const hashedPassword = await bcrypt.hash(password, 16);
-  const t = await sequelize.transaction();
 
   let specialite;
   if (specialiteName) {
     specialite = await Specialite.findOne({
-      where: { name: specialite },
+      where: { name: specialiteName },
     });
     if (!specialite) {
       throw new Error("No specialite found ");
     }
   }
-
   const user = await User.create(
-    { name, email, password: hashedPassword },
+    { name, email, password: hashedPassword, role },
     { transaction: t }
   );
   if (!user) {
-    t.rollback();
     throw new Error("could not create Enseignant");
   }
   const enseignant = await Enseignant.create(
-    { id: user.id, nss, idSpecialite: specialite.id },
+    { id: user.id, nss, idSpecialite: specialite?.id },
     { transaction: t }
   );
-  await t.commit();
+
   if (!enseignant) {
-    t.rollback();
     throw new Error("could not create Enseignant");
   }
   return enseignant;
 };
 
-export const deleteEnseignantService = async (req) => {
+export const deleteEnseignantService = async (req, t) => {
   const { id } = req.params;
-  const t = await sequelize.transaction();
+  console.log(id);
   const enseignant = await Enseignant.findByPk(id, {
     attributes: ["id"],
     transaction: t,
   });
 
   if (!enseignant) {
-    await t.rollback();
     throw new Error("Enseignant not found to delete");
   }
 
   if (enseignant.isAdmin) {
-    await t.rollback();
     throw new Error("Cannot delete an admin user");
   }
 
   await User.destroy({ where: { id }, transaction: t });
+  await Enseignant.destroy({ where: { id }, transaction: t });
 
-  await t.commit();
   return true;
 };
 

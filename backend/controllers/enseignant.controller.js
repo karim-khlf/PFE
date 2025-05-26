@@ -6,6 +6,8 @@ import {
   getEnseignantService,
 } from "../services/enseignant.services.js";
 
+import sequelize from "../sequelize.js";
+
 export const getAllEnseignants = async (req, res) => {
   try {
     const enseignants = await getAllEnseignantsService(req);
@@ -29,22 +31,25 @@ export const getEnseignant = async (req, res) => {
 };
 
 export const createEnseignant = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
-    const etudiant = await createEnseignantService(req);
+    const enseignant = await createEnseignantService(req);
     res
       .status(200)
-      .json({ etudiant, message: "etudiant created successfully" });
+      .json({ enseignant, message: "enseignant created successfully" });
+    await t.commit();
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erreur lors de la création de l'étudiant", error });
+    await t.rollback();
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const deleteEnseignant = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
-    await deleteEnseignantService(req);
-    res.status(200).json({ message: "Etudiant supprimé avec succès" });
+    await deleteEnseignantService(req, t);
+    res.status(200).json({ message: "enseignant supprimé avec succès" });
+    await t.commit();
   } catch (error) {
     await t.rollback();
     res.status(500).json({ error: error.message });
@@ -54,7 +59,7 @@ export const deleteEnseignant = async (req, res) => {
 export const updateEnseignant = async (req, res) => {
   try {
     await updateEnseignantService(req);
-    res.status(200).json({ message: "Etudiant mis à jour avec succès" });
+    res.status(200).json({ message: "Eenseignant mis à jour avec succès" });
   } catch (error) {
     await t.rollback();
     res.status(500).json({

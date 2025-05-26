@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../sequelize.js";
 
 const Competence = sequelize.define(
   "Competence",
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    nom: { type: DataTypes.STRING(255), allowNull: false },
+    name: { type: DataTypes.STRING(255), allowNull: false },
   },
   { timestamps: false }
 );

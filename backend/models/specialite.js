@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../sequelize.js";
 
 const Specilite = sequelize.define(
   "Specialite",
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    nom: { type: DataTypes.STRING, allowNull: false },
+    name: { type: DataTypes.STRING, allowNull: false },
   },
   { timestamps: false }
 );

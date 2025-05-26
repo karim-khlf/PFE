@@ -1,5 +1,5 @@
 import {
-  creatClassService,
+  createClassService,
   deleteClassService,
   updateClassService,
   getClassService,
@@ -7,10 +7,10 @@ import {
 } from "../services/class.services.js";
 export const createClass = async (req, res) => {
   try {
-    const newClass = await creatClassService(req);
+    const newClass = await createClassService(req);
     return res.status(200).json(newClass);
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 export const deleteClass = async (req, res) => {
@@ -21,7 +21,7 @@ export const deleteClass = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
-export const upadteClass = async (req, res) => {
+export const updateClass = async (req, res) => {
   try {
     const updatedClass = await updateClassService(req);
     return res.status(200).json(updatedClass);

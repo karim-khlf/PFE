@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../sequelize.js";
 
 const Class = sequelize.define(
   "Class",
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    nom: { type: DataTypes.STRING, allowNull: false },
+    name: { type: DataTypes.STRING, allowNull: false },
     type: {
       type: DataTypes.ENUM("small", "medium", "large"),
       allowNull: false,
